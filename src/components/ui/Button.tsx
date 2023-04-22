@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 interface Props {
@@ -6,12 +7,30 @@ interface Props {
   disabled?: boolean;
   className?: string;
   children: React.ReactNode;
+  variant?: "solid" | "outline";
 }
 
-export const Button: React.FC<Props> = ({isLoading, onClick, disabled, className, children}) => {
+export const Button: React.FC<Props> = ({
+  isLoading,
+  onClick,
+  disabled,
+  className,
+  children,
+  variant = "solid",
+}) => {
+  const buttonStyle = classNames(
+    "flex items-center gap-2 rounded-md px-4 py-2 text-lg font-bold",
+    {
+      "bg-orange-600 hover:bg-orange-400 text-white": variant === "solid",
+    },
+    {
+      "border border-orange-600 hover:bg-orange-600 text-white": variant === "outline",
+    },
+  );
+
   return (
     <button
-      className={`flex items-center gap-2 rounded-md bg-[#ff6b00] px-4 py-2 text-lg font-bold text-white ${className}`}
+      className={`${buttonStyle} ${className}`}
       disabled={isLoading || disabled}
       onClick={onClick}
     >

@@ -24,11 +24,11 @@ const Home: NextPage = () => {
         {!user && <p className="mt-4 text-2xl text-white">Login to start using the app!</p>}
         <div className="mt-8">
           {!user ? (
-            <Button isLoading={!loaded} onClick={openSignIn}>
+            <Button isLoading={!loaded} variant="solid" onClick={openSignIn}>
               Login
             </Button>
           ) : (
-            <Button isLoading={!loaded} onClick={signOut}>
+            <Button isLoading={!loaded} variant="outline" onClick={signOut}>
               Logout
             </Button>
           )}
