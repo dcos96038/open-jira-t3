@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 
 interface Props {
-  isLoading: boolean;
+  isLoading?: boolean;
   onClick: () => void;
   disabled?: boolean;
   className?: string;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Button: React.FC<Props> = ({
-  isLoading,
+  isLoading = false,
   onClick,
   disabled,
   className,
