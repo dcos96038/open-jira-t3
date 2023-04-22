@@ -26,14 +26,11 @@ export const Button: React.FC<Props> = ({
     {
       "border border-orange-600 hover:bg-orange-600 text-white": variant === "outline",
     },
+    className,
   );
 
   return (
-    <button
-      className={`${buttonStyle} ${className}`}
-      disabled={isLoading || disabled}
-      onClick={onClick}
-    >
+    <button className={buttonStyle} disabled={isLoading || disabled} onClick={onClick}>
       {children}
       {isLoading && <ButtonLoading />}
     </button>
