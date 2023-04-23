@@ -5,11 +5,8 @@ import {useRouter} from "next/router";
 import {useEffect} from "react";
 
 import {Button} from "~/components/ui/Button";
-import {api} from "~/utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({text: "from tRPC"});
-
   const {openSignIn, loaded} = useClerk();
 
   const {user} = useUser();
