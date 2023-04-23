@@ -19,7 +19,7 @@ export const Button: React.FC<Props> = ({
   variant = "solid",
 }) => {
   const buttonStyle = classNames(
-    "flex items-center gap-2 rounded-md px-4 py-2 text-lg font-bold",
+    "flex items-center gap-2 rounded-md px-2 py-1",
     {
       "bg-orange-600 hover:bg-orange-400 text-white": variant === "solid",
     },
