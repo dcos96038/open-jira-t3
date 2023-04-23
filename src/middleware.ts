@@ -20,9 +20,7 @@ export default withClerkMiddleware((request: NextRequest) => {
   if (!userId) {
     // redirect the users to /pages/sign-in/[[...index]].ts
 
-    const signInUrl = new URL("/sign-in", request.url);
-
-    signInUrl.searchParams.set("redirect_url", request.url);
+    const signInUrl = new URL("/", request.url);
 
     return NextResponse.redirect(signInUrl);
   }
