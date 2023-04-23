@@ -9,7 +9,7 @@ interface Props {
 
 export const Navbar: React.FC<Props> = ({username, signOut}) => {
   return (
-    <div className="container flex items-center border-b border-orange-600 bg-zinc-900 px-4 py-2">
+    <div className="flex items-center border-b border-orange-600 bg-zinc-900 px-4 py-2">
       <h6 className="font-bold text-white">Open Jira</h6>
       <p className="ml-auto mr-3 font-semibold text-white">{username}</p>
       <Button onClick={signOut}>Logout</Button>

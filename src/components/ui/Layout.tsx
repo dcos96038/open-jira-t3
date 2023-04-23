@@ -13,7 +13,7 @@ export const Layout: React.FC<Props> = ({children}) => {
   const {signOut} = useClerk();
 
   return (
-    <main className="flex min-h-screen flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+    <main className="flex h-screen min-h-screen flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       {user && <Navbar signOut={signOut} username={user.username} />}
       {children}
     </main>
