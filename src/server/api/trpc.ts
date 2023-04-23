@@ -30,8 +30,6 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
 
   const session = getAuth(req);
 
-  console.log(session);
-
   return {
     prisma,
     currentUser: session.userId,
