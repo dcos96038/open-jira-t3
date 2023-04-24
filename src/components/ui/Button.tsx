@@ -8,6 +8,7 @@ interface Props {
   className?: string;
   children: React.ReactNode;
   variant?: "solid" | "outline";
+  color?: "default" | "danger";
   type?: "button" | "submit" | "reset";
 }
 
@@ -19,15 +20,25 @@ export const Button: React.FC<Props> = ({
   children,
   variant = "solid",
   type = "button",
+  color = "default",
 }) => {
   const buttonStyle = classNames(
     "flex items-center gap-2 rounded-md px-2 py-1",
     {
-      "bg-orange-600 hover:bg-orange-400 text-white": variant === "solid",
+      "bg-orange-600 hover:bg-orange-400 text-white": variant === "solid" && color === "default",
     },
     {
-      "border border-orange-600 hover:bg-orange-600 text-white": variant === "outline",
+      "border border-orange-600 hover:bg-orange-600 text-white":
+        variant === "outline" && color === "default",
     },
+    {
+      "bg-red-600 hover:bg-red-400 text-white": variant === "solid" && color === "danger",
+    },
+    {
+      "border border-red-600 hover:bg-red-600 text-white":
+        variant === "outline" && color === "danger",
+    },
+    "rounded-full",
     className,
   );
 
