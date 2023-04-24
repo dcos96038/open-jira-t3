@@ -13,9 +13,11 @@ export const Layout: React.FC<Props> = ({children}) => {
   const {signOut} = useClerk();
 
   return (
-    <main className="flex h-screen min-h-screen flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+    <main className="flex h-screen min-h-screen w-full flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       {user && <Navbar signOut={signOut} username={user.username} />}
-      {children}
+      <div className="flex h-full w-full items-center justify-center overflow-x-auto">
+        {children}
+      </div>
     </main>
   );
 };

@@ -8,6 +8,7 @@ interface Props {
   className?: string;
   children: React.ReactNode;
   variant?: "solid" | "outline";
+  type?: "button" | "submit" | "reset";
 }
 
 export const Button: React.FC<Props> = ({
@@ -17,6 +18,7 @@ export const Button: React.FC<Props> = ({
   className,
   children,
   variant = "solid",
+  type = "button",
 }) => {
   const buttonStyle = classNames(
     "flex items-center gap-2 rounded-md px-2 py-1",
@@ -30,7 +32,7 @@ export const Button: React.FC<Props> = ({
   );
 
   return (
-    <button className={buttonStyle} disabled={isLoading || disabled} onClick={onClick}>
+    <button className={buttonStyle} disabled={isLoading || disabled} type={type} onClick={onClick}>
       {children}
       {isLoading && <ButtonLoading />}
     </button>

@@ -1,10 +1,9 @@
-import React from "react";
+import type {Task} from "@prisma/client";
 
-import {RouterOutputs} from "~/utils/api";
+import React, {useState} from "react";
 
 import {Card} from "./Card";
-
-type Task = RouterOutputs["tasks"]["getAll"][number];
+import {NewTaskModal} from "./NewTaskModal";
 
 interface Props {
   state: string;
@@ -12,19 +11,31 @@ interface Props {
 }
 
 export const Column: React.FC<Props> = ({state, tasks}) => {
+  const [createTaskModalIsOpen, setCreateTaskModalIsOpen] = useState(false);
+
   return (
-    <div className="flex h-full flex-col gap-3 pb-4">
-      <h2 className="text-lg font-bold text-orange-500">{state}</h2>
-      <div className="flex w-80 shrink-0 grow flex-col gap-3 rounded-md border border-orange-500 bg-gradient-to-b from-zinc-800 to-black px-4 pb-4 shadow-xl">
-        <div className="flex items-center justify-between overflow-y-auto pt-3">
-          <h3 className="text-lg font-semibold text-white">Create new task</h3>
-          <button className="flex h-6 w-6 items-center justify-center rounded-full bg-transparent font-bold text-white">
-            <AddIcon />
-          </button>
+    <>
+      <div className="flex h-full flex-col gap-3 pb-4">
+        <h2 className="text-lg font-bold text-orange-500">{state}</h2>
+        <div className="flex w-80 shrink-0 grow flex-col gap-3 rounded-md border border-orange-500 bg-gradient-to-b from-zinc-800 to-black px-4 pb-4 shadow-xl">
+          <div className="flex items-center justify-between overflow-y-auto pt-3">
+            <h3 className="text-lg font-semibold text-white">Create new task</h3>
+            <button
+              className="flex h-6 w-6 items-center justify-center rounded-full bg-transparent font-bold text-white"
+              onClick={() => setCreateTaskModalIsOpen(true)}
+            >
+              <AddIcon />
+            </button>
+          </div>
+          {tasks && tasks.map((t) => <Card {...t} key={t.id} />)}
         </div>
-        {tasks && tasks.map((t) => <Card {...t} key={t.id} />)}
       </div>
-    </div>
+      <div>
+        {createTaskModalIsOpen && (
+          <NewTaskModal setCreateTaskModalIsOpen={setCreateTaskModalIsOpen} />
+        )}
+      </div>
+    </>
   );
 };
 
