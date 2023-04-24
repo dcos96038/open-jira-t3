@@ -29,4 +29,26 @@ export const tasksRouter = createTRPCRouter({
 
       return task;
     }),
+
+  update: privateProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        content: z.string().min(1).max(255),
+        title: z.string().min(1).max(20),
+        state: z.enum(["TODO", "IN_PROGRESS", "DONE"]),
+      }),
+    )
+    .mutation(async ({ctx, input}) => {
+      const task = ctx.prisma.task.update({
+        where: {id: input.id},
+        data: {
+          content: input.content,
+          title: input.title,
+          state: input.state,
+        },
+      });
+
+      return task;
+    }),
 });
