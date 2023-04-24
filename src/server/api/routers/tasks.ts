@@ -17,7 +17,7 @@ export const tasksRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ctx, input}) => {
-      const task = ctx.prisma.task.create({
+      const task = await ctx.prisma.task.create({
         data: {
           authorId: ctx.currentUser,
           content: input.content,
@@ -40,7 +40,7 @@ export const tasksRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ctx, input}) => {
-      const task = ctx.prisma.task.update({
+      const task = await ctx.prisma.task.update({
         where: {id: input.id},
         data: {
           content: input.content,
@@ -51,4 +51,12 @@ export const tasksRouter = createTRPCRouter({
 
       return task;
     }),
+
+  remove: privateProcedure.input(z.string()).mutation(async ({ctx, input}) => {
+    const task = await ctx.prisma.task.delete({
+      where: {id: input},
+    });
+
+    return task;
+  }),
 });
