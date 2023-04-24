@@ -11,7 +11,7 @@ export const tasksRouter = createTRPCRouter({
     .input(
       z.object({
         content: z.string().min(1).max(255),
-        boardId: z.string(),
+        board: z.string(),
         title: z.string().min(1).max(20),
         state: z.enum(["TODO", "IN_PROGRESS", "DONE"]),
       }),
@@ -21,7 +21,7 @@ export const tasksRouter = createTRPCRouter({
         data: {
           authorId: ctx.currentUser,
           content: input.content,
-          board: {connect: {id: input.boardId}},
+          board: {connect: {id: input.board}},
           title: input.title,
           state: input.state,
         },
