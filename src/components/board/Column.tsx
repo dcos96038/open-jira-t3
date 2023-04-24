@@ -2,21 +2,57 @@ import type {Task} from "@prisma/client";
 
 import React, {useState} from "react";
 
+import {useDragNDrop} from "~/hooks/useDragNDrop";
+import {api} from "~/utils/api";
+
 import {Card} from "./Card";
 import {NewTaskModal} from "./NewTaskModal";
 
 interface Props {
-  state: string;
+  state: Task["state"];
   tasks: Task[];
 }
 
 export const Column: React.FC<Props> = ({state, tasks}) => {
+  const ctx = api.useContext();
+
+  const {mutate} = api.tasks.update.useMutation({
+    onSuccess: () => {
+      void ctx.tasks.getAll.invalidate();
+    },
+    onError: (e) => {
+      console.error(e);
+    },
+  });
+
   const [createTaskModalIsOpen, setCreateTaskModalIsOpen] = useState(false);
+  const {isDragging, selectedTask} = useDragNDrop();
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+
+    if (selectedTask) {
+      mutate({
+        id: selectedTask.id,
+        title: selectedTask.title,
+        content: selectedTask.content,
+        state,
+      });
+    }
+
+    console.log(selectedTask);
+  };
 
   return (
     <>
-      <div className="flex h-full flex-col gap-3 pb-4">
-        <h2 className="text-lg font-bold text-orange-500">{state}</h2>
+      <div
+        className="flex h-full flex-col gap-3 pb-4"
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        onDrop={onDrop}
+      >
+        <h2 className="text-lg font-bold text-orange-500">{state.replace("_", " ")}</h2>
         <div className="flex w-80 shrink-0 grow flex-col gap-3 rounded-md border border-orange-500 bg-gradient-to-b from-zinc-800 to-black px-4 pb-4 shadow-xl">
           <div className="flex items-center justify-between overflow-y-auto pt-3">
             <h3 className="text-lg font-semibold text-white">Create new task</h3>
@@ -27,14 +63,12 @@ export const Column: React.FC<Props> = ({state, tasks}) => {
               <AddIcon />
             </button>
           </div>
-          {tasks && tasks.map((t) => <Card {...t} key={t.id} />)}
+          {tasks && tasks.map((t) => <Card key={t.id} task={t} />)}
         </div>
       </div>
-      <div>
-        {createTaskModalIsOpen && (
-          <NewTaskModal setCreateTaskModalIsOpen={setCreateTaskModalIsOpen} />
-        )}
-      </div>
+      {createTaskModalIsOpen && (
+        <NewTaskModal setCreateTaskModalIsOpen={setCreateTaskModalIsOpen} />
+      )}
     </>
   );
 };

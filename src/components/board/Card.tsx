@@ -1,23 +1,41 @@
+import {Task} from "@prisma/client";
 import dayjs from "dayjs";
 import React from "react";
 
-import {RouterOutputs} from "~/utils/api";
+import {useDragNDrop} from "~/hooks/useDragNDrop";
 
-type Task = RouterOutputs["tasks"]["getAll"][number];
+import {Button} from "../ui/Button";
 
 interface Props {
-  title: Task["title"];
-  content: Task["content"];
-  createdAt: Task["createdAt"];
+  task: Task;
 }
 
-export const Card: React.FC<Props> = ({title, content, createdAt}) => {
+export const Card: React.FC<Props> = ({task}) => {
+  const {onDragStart, onDragEnd, isDragging} = useDragNDrop();
+
   return (
-    <div className="flex h-[150px] cursor-pointer flex-col rounded-md border border-orange-500 bg-[#15162c] px-2 text-white">
-      <div className="text-lg font-semibold capitalize text-orange-500">{title}</div>
-      <div className="line-clamp-3 px-1 font-thin">{content}</div>
+    <div
+      draggable
+      className="flex h-[150px] cursor-pointer flex-col rounded-md border border-orange-500 bg-[#15162c] px-2 text-white"
+      onDragEnd={onDragEnd}
+      onDragStart={() => {
+        onDragStart(task);
+      }}
+    >
+      <div className="flex items-center justify-between py-2">
+        <div className="text-lg font-semibold capitalize text-orange-500">{task.title}</div>
+        <Button
+          className="flex h-6 w-6 items-center justify-center rounded-[9999px] text-xs"
+          color="danger"
+          variant="outline"
+          onClick={() => {}}
+        >
+          X
+        </Button>
+      </div>
+      <div className="line-clamp-3 px-1 font-thin">{task.content}</div>
       <div className="mt-auto px-1 py-2 text-end text-sm font-thin">
-        {dayjs(createdAt).format("DD/MM/YYYY")}
+        {dayjs(task.createdAt).format("DD/MM/YYYY")}
       </div>
     </div>
   );
