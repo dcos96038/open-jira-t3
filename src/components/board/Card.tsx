@@ -20,7 +20,7 @@ export const Card: React.FC<Props> = ({task}) => {
   const cardStyle = classNames(
     "flex h-[150px] cursor-pointer flex-col rounded-md border border-orange-500 bg-[#15162c] px-2 text-white",
     {
-      "opacity-50": isDragging,
+      "opacity-25": isDragging,
     },
   );
 

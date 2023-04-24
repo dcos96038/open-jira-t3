@@ -32,6 +32,7 @@ export const Column: React.FC<Props> = ({state, tasks}) => {
     e.preventDefault();
 
     if (selectedTask) {
+      if (selectedTask.state === state) return;
       mutate({
         id: selectedTask.id,
         title: selectedTask.title,
@@ -39,8 +40,6 @@ export const Column: React.FC<Props> = ({state, tasks}) => {
         state,
       });
     }
-
-    console.log(selectedTask);
   };
 
   return (
