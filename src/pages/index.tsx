@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/home");
+      router.push("/boards");
     }
   }, [user, router]);
 
