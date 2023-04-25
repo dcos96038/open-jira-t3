@@ -3,9 +3,15 @@ import {z} from "zod";
 import {createTRPCRouter, privateProcedure} from "~/server/api/trpc";
 
 export const tasksRouter = createTRPCRouter({
-  getAll: privateProcedure.query(({ctx}) => {
-    return ctx.prisma.task.findMany({where: {authorId: ctx.currentUser}});
-  }),
+  getAll: privateProcedure
+    .input(
+      z.object({
+        board: z.string(),
+      }),
+    )
+    .query(({ctx, input}) => {
+      return ctx.prisma.task.findMany({where: {authorId: ctx.currentUser, boardId: input.board}});
+    }),
 
   create: privateProcedure
     .input(
