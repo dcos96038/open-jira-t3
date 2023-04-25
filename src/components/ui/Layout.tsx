@@ -15,7 +15,7 @@ export const Layout: React.FC<Props> = ({children}) => {
   return (
     <main className="flex h-screen min-h-screen w-full flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       {user && <Navbar signOut={signOut} username={user.username} />}
-      <div className="flex h-full w-full items-center justify-center overflow-x-auto">
+      <div className="flex h-full w-full items-center justify-center overflow-x-auto sm:mx-auto sm:max-w-7xl">
         {children}
       </div>
     </main>
