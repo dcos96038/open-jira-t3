@@ -60,7 +60,7 @@ export const Card: React.FC<Props> = ({task}) => {
           X
         </Button>
       </div>
-      <div className="line-clamp-3 px-1 font-thin">{task.content}</div>
+      <p className="line-clamp-3 px-1 font-thin">{task.content}</p>
       <div className="mt-auto px-1 py-2 text-end text-sm font-thin">
         {dayjs(task.createdAt).format("DD/MM/YYYY")}
       </div>
