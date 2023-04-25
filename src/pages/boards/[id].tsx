@@ -1,13 +1,16 @@
 import type {NextPage} from "next";
 
+import {useRouter} from "next/router";
 import React from "react";
 
 import {Column} from "~/components/board/Column";
 import {DragNDropProvider} from "~/hooks/useDragNDrop";
 import {api} from "~/utils/api";
 
-const UserHome: NextPage = () => {
-  const tasks = api.tasks.getAll.useQuery();
+const BoardPage: NextPage = () => {
+  const {query} = useRouter();
+
+  const tasks = api.tasks.getAll.useQuery({board: query.id as string});
 
   return (
     <DragNDropProvider>
@@ -23,4 +26,4 @@ const UserHome: NextPage = () => {
   );
 };
 
-export default UserHome;
+export default BoardPage;
