@@ -27,4 +27,15 @@ export const boardsRouter = createTRPCRouter({
 
     return boardsWithTaskCount;
   }),
+
+  create: privateProcedure.input(z.object({title: z.string()})).mutation(async ({ctx, input}) => {
+    const board = await ctx.prisma.board.create({
+      data: {
+        authorId: ctx.currentUser,
+        title: input.title,
+      },
+    });
+
+    return board;
+  }),
 });
